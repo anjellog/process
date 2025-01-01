@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Process Guide</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,12 +18,10 @@
                 white-space: nowrap;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
-                /* Hide scrollbar in Firefox */
             }
 
             .tabs-container::-webkit-scrollbar {
                 display: none;
-                /* Hide scrollbar in WebKit-based browsers */
             }
 
             .tabs-container button {
@@ -86,7 +85,6 @@
     <script>
         let isSearching = false;
 
-        // JSON data (same as before)
         const contentData = {
             topics: [
                 {

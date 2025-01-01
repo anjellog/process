@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Generator with Main Sections</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+    <div class="container mx-auto p-6">
+        <header class="mb-6 text-center">
+            <h1 class="text-3xl font-bold">JSON Generator with Main Sections</h1>
+            <p class="text-gray-600">Build complex JSON structures with multiple main sections and items.</p>
+        </header>
+
+        <!-- Main Section Editor -->
+        <div id="mainSectionArea" class="mb-6 p-4 bg-white rounded shadow">
+            <h2 class="text-xl font-bold mb-4">Main Sections</h2>
+            <div id="mainSectionsContainer" class="space-y-4">
+                <!-- Dynamic main sections will be added here -->
+            </div>
+            <div class="flex justify-end mt-4">
+                <button id="addMainSectionButton"
+                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Add Main Section</button>
+            </div>
+        </div>
+
+        <!-- JSON Output -->
+        <div class="mb-6 p-4 bg-white rounded shadow">
+            <h2 class="text-xl font-bold mb-4">Generated JSON</h2>
+            <textarea id="jsonOutput" class="w-full h-64 p-2 border border-gray-300 rounded"
+                placeholder="Generated JSON will appear here..." readonly></textarea>
+        </div>
+
+        <div class="flex justify-end">
+            <button id="generateJsonButton"
+                class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600 transition">Generate
+                JSON</button>
+        </div>
+    </div>
+
+    <script>
+        let mainSections = [];
+
+        const mainSectionsContainer = document.getElementById("mainSectionsContainer");
+        const jsonOutput = document.getElementById("jsonOutput");
+
+        function createMainSection() {
+            const mainSectionId = `mainSection-${Date.now()}`;
+            mainSections.push({ id: mainSectionId, type: "", sections: [] });
+
+            const mainSectionHtml = `
+                <div id="${mainSectionId}" class="border p-4 rounded bg-gray-50 space-y-4">
+                    <div>
+                        <label class="block font-bold mb-2">Main Section Type</label>
+                        <select class="w-full p-2 border border-gray-300 rounded" onchange="updateMainSectionType('${mainSectionId}', this.value)">
+                            <option value="" disabled selected>Select a type</option>
+                            <option value="topics">Topics</option>
+                            <option value="scenarios">Scenarios</option>
+                            <option value="outreach">Outreach</option>
+                            <option value="mapping">Mapping</option>
+                            <option value="chasing">Chasing</option>
+                        </select>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold">Sections</h3>
+                        <div id="sections-${mainSectionId}" class="space-y-2">
+                            <!-- Subsections will be dynamically added here -->
+                        </div>
+                        <button onclick="addSection('${mainSectionId}')"
+                            class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">Add Subsection</button>
+                    </div>
+                    <button onclick="removeMainSection('${mainSectionId}')"
+                        class="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">Remove Main Section</button>
+                </div>`;
+            mainSectionsContainer.insertAdjacentHTML("beforeend", mainSectionHtml);
+        }
+
+        function addSection(mainSectionId) {
+            const sectionId = `section-${Date.now()}`;
+            const mainSection = mainSections.find(ms => ms.id === mainSectionId);
+            mainSection.sections.push({ id: sectionId, title: "", description: "", items: [] });
+
+            const sectionHtml = `
+                <div id="${sectionId}" class="border p-4 rounded bg-gray-200 space-y-4">
+                    <div>
+                        <label class="block font-bold mb-2">Section Title</label>
+                        <input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter title" oninput="updateSection('${mainSectionId}', '${sectionId}', 'title', this.value)">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2">Section Description</label>
+                        <textarea class="w-full p-2 border border-gray-300 rounded" placeholder="Enter description" oninput="updateSection('${mainSectionId}', '${sectionId}', 'description', this.value)"></textarea>
+                    </div>
+                    <div>
+                        <h4 class="text-md font-bold">Items</h4>
+                        <div id="items-${sectionId}" class="space-y-2">
+                            <!-- Items will be dynamically added here -->
+                        </div>
+                        <div class="flex mt-2">
+                            <button onclick="addItem('${mainSectionId}', '${sectionId}', 'text')" class="bg-blue-500 text-white px-2 py-1 rounded mr-2 hover:bg-blue-600 transition">Add Text</button>
+                            <button onclick="addItem('${mainSectionId}', '${sectionId}', 'image')" class="bg-green-500 text-white px-2 py-1 rounded mr-2 hover:bg-green-600 transition">Add Image</button>
+                            <button onclick="addItem('${mainSectionId}', '${sectionId}', 'video')" class="bg-purple-500 text-white px-2 py-1 rounded hover:bg-purple-600 transition">Add Video</button>
+                            <button onclick="addItem('${mainSectionId}', '${sectionId}', 'audio')" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 transition">Add Audio</button>
+                        </div>
+                    </div>
+                    <button onclick="removeSection('${mainSectionId}', '${sectionId}')"
+                        class="mt-4 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition">Remove Subsection</button>
+                </div>`;
+            document.getElementById(`sections-${mainSectionId}`).insertAdjacentHTML("beforeend", sectionHtml);
+        }
+
+        function addItem(mainSectionId, sectionId, type) {
+            const itemId = `item-${Date.now()}`;
+            const mainSection = mainSections.find(ms => ms.id === mainSectionId);
+            const section = mainSection.sections.find(s => s.id === sectionId);
+            section.items.push({ id: itemId, type, content: "" });
+
+            const itemHtml = `
+                <div id="${itemId}" class="border p-2 rounded bg-gray-300">
+                    <label class="block font-bold mb-2">${type.charAt(0).toUpperCase() + type.slice(1)} Content</label>
+                    <input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter ${type} content" oninput="updateItem('${mainSectionId}', '${sectionId}', '${itemId}', this.value)">
+                    <button onclick="removeItem('${mainSectionId}', '${sectionId}', '${itemId}')"
+                        class="mt-2 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition">Remove</button>
+                </div>`;
+            document.getElementById(`items-${sectionId}`).insertAdjacentHTML("beforeend", itemHtml);
+        }
+
+        function updateMainSectionType(mainSectionId, type) {
+            const mainSection = mainSections.find(ms => ms.id === mainSectionId);
+            mainSection.type = type;
+        }
+
+        function updateSection(mainSectionId, sectionId, field, value) {
+            const mainSection = mainSections.find(ms => ms.id === mainSectionId);
+            const section = mainSection.sections.find(s => s.id === sectionId);
+            section[field] = value;
+        }
+
+        function updateItem(mainSectionId, sectionId, itemId, value) {
+            const mainSection = mainSections.find(ms => ms.id === mainSectionId);
+            const section = mainSection.sections.find(s => s.id === sectionId);
+            const item = section.items.find(i => i.id === itemId);
+            item.content = value;
+        }
+
+        function removeMainSection(mainSectionId) {
+            document.getElementById(mainSectionId).remove();
+            mainSections = mainSections.filter(ms => ms.id !== mainSectionId);
+        }
+
+        function removeSection(mainSectionId, sectionId) {
+            document.getElementById(sectionId).remove();
+            const mainSection = mainSections.find(ms => ms.id === mainSectionId);
+            mainSection.sections = mainSection.sections.filter(s => s.id !== sectionId);
+        }
+
+        function removeItem(mainSectionId, sectionId, itemId) {
+            document.getElementById(itemId).remove();
+            const mainSection = mainSections.find(ms => ms.id === mainSectionId);
+            const section = mainSection.sections.find(s => s.id === sectionId);
+            section.items = section.items.filter(i => i.id !== itemId);
+        }
+
+        function generateJSON() {
+            const output = mainSections.map(mainSection => ({
+                type: mainSection.type,
+                sections: mainSection.sections.map(section => ({
+                    title: section.title,
+                    description: section.description,
+                    items: section.items.map(item => ({
+                        type: item.type,
+                        content: item.content
+                    }))
+                }))
+            }));
+            jsonOutput.value = JSON.stringify(output, null, 2);
+        }
+
+        document.getElementById("addMainSectionButton").addEventListener("click", createMainSection);
+        document.getElementById("generateJsonButton").addEventListener("click", generateJSON);
+    </script>
+</body>
+
+</html>
