@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        @media (max-width: 640px) {
+            .tabs-container {
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                /* Hide scrollbar in Firefox */
+            }
+
+            .tabs-container::-webkit-scrollbar {
+                display: none;
+                /* Hide scrollbar in WebKit-based browsers */
+            }
+
+            .tabs-container button {
+                display: inline-block;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-gray-100">
+    <div class="container mx-auto p-6">
+        <header class="mb-6">
+            <h1 class="text-3xl font-bold text-center">Process Guide</h1>
+        </header>
+
+        <!-- Search Bar -->
+        <div class="mb-6">
+            <input type="text" id="searchBar"
+                class="w-full p-2 rounded border border-gray-700 bg-gray-800 text-gray-100" placeholder="Search..."
+                oninput="filterContent()">
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs-container flex border-b border-gray-700 mb-4">
+            <ul class="flex">
+                <li class="mr-4"><button id="topicsTab" onclick="handleTabClick('topics')"
+                        class="px-4 py-2 focus:outline-none">Topics</button></li>
+                <li class="mr-4"><button id="scenariosTab" onclick="handleTabClick('scenarios')"
+                        class="px-4 py-2 focus:outline-none">Scenarios</button></li>
+                <li class="mr-4"><button id="mappingTab" onclick="handleTabClick('mapping')"
+                        class="px-4 py-2 focus:outline-none">Mapping</button></li>
+                <li class="mr-4"><button id="outreachTab" onclick="handleTabClick('outreach')"
+                        class="px-4 py-2 focus:outline-none">Dr. Outreach</button></li>
+                <li class="mr-4"><button id="chasingTab" onclick="handleTabClick('chasing')"
+                        class="px-4 py-2 focus:outline-none">Chasing</button></li>
+            </ul>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="tabContents" class="mt-4">
+            <div id="topics" class="tab-content hidden">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+
+            <div id="scenarios" class="tab-content hidden">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+            <div id="mapping" class="tab-content hidden">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+            <div id="outreach" class="tab-content hidden">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+            <div id="chasing" class="tab-content hidden">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isSearching = false;
+
+        // JSON data (same as before)
+        const contentData = {
+            topics: [
+                {
+                    title: "Topic 1",
+                    description: "Description of topic 1. This is an introductory part of the topic.",
+                    items: [
+                        {  "type": "text",
+                            "content": "Content for topic 1. This is the main paragraph that will be shown initially.<br><b>Bold text example</b> and <i>italic text example</i>.<br>&nbsp;&nbsp;&nbsp;&nbsp;This part is indented with a tab space."
+                        },
+                        {
+                            "type": "text",
+                            "content": "This is some more filler content for topic 1. We can add some text here to make it appear longer.<br><b>Bold text in the middle of a paragraph.</b><br><i>Italicized text as well.</i><br>&nbsp;&nbsp;&nbsp;&nbsp;Indented text using a tab."
+                        },
+                        {
+                            "type": "text",
+                            "content": "A very long paragraph here. The quick brown fox jumps over the lazy dog, repeatedly. This will continue to go on to simulate a lengthy paragraph.<br><b>Bold text in the middle again.</b><br><i>Italicized section here.</i><br>&nbsp;&nbsp;&nbsp;&nbsp;And here is some text with a tab space before it."
+                        }
+
+                    ]
+                },
+                {
+                    title: "Eto ay topic",
+                    description: "Description of topic 2. This is another introductory part of the second topic.",
+                    items: [
+                        { type: "text", content: "Content for topic 2. More details can be provided here." },
+                        { type: "text", content: "<br> <b>Another lengthy paragraph to demonstrate more detailed content. </b>This one describes the second topic in full detail, including extended explanations and examples." },
+                        { type: "text", content: "The second topic might include a few insights into how things work, or a deeper look into the scenario. It's always good to have additional text to give depth to the content." },
+                        { type: "video", src: "https://www.w3schools.com/html/mov_bbb.mp4" }
+                    ]
+                }
+            ],
+            scenarios: [
+                {
+                    title: "Scenario 1",
+                    description: "Details about scenario 1, this is a longer scenario description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    items: [
+                        { type: "image", src: "https://via.placeholder.com/150", alt: "Placeholder Image" }
+                    ]
+                },
+                {
+                    title: "Scenario 2",
+                    description: "Details about scenario 2. A lot of text here to demonstrate longer filler content. This is more detailed information that can include context about the scenario, challenges, and possible outcomes.",
+                    items: [
+                        { type: "audio", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" }
+                    ]
+                }
+            ],
+            mapping: [
+                {
+                    title: "Mapping Guide 1",
+                    description: "Instructions for mapping guide 1... This section goes on with step-by-step details of how to complete a specific task, utilizing various tools and techniques. It's important to provide an in-depth guide with examples, screenshots, and further elaboration.",
+                    items: [
+                        { type: "video", src: "https://www.w3schools.com/html/mov_bbb.mp4" }
+                    ]
+                }
+            ],
+            outreach: [
+                {
+                    title: "Outreach Strategy 1",
+                    description: "Steps for outreach strategy 1... This section covers the strategy in detail, breaking down each phase, its importance, and how to execute it properly. This extended description is here to show how content can be dynamically presented with lengthy text and actions.",
+                    items: [
+                        { type: "text", content: "Step 1: Initial outreach..." },
+                        { type: "text", content: "Step 2: Follow-up communication..." },
+                        { type: "text", content: "Step 3: Long-term engagement..." }
+                    ]
+                }
+            ],
+            chasing: [
+                {
+                    title: "Chasing Techniques",
+                    description: "Details on chasing techniques... Chasing involves techniques for closing deals, handling objections, and maintaining a strong relationship. This section is designed to help individuals understand the various strategies in the chasing process, with examples and tactics for success.",
+                    items: [
+                        { type: "text", content: "Chasing technique 1: Overview..." },
+                        { type: "text", content: "Chasing technique 2: Effective communication..." }
+                    ]
+                }
+            ]
+        };
+
+        function renderContent(tabId) {
+            const tabContent = document.getElementById(tabId);
+            tabContent.innerHTML = ""; // Clear current content
+
+            const data = contentData[tabId];
+
+            data.forEach(section => {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.classList.add('box', 'p-4', 'mb-4', 'border', 'border-gray-700', 'rounded');
+
+                // Title and description
+                const title = document.createElement('h2');
+                title.classList.add('font-bold');
+                title.innerText = section.title;
+
+                const description = document.createElement('p');
+                description.innerText = section.description;
+
+                sectionDiv.appendChild(title);
+                sectionDiv.appendChild(description);
+
+                // Container for hidden content
+                const hiddenContentDiv = document.createElement('div');
+                hiddenContentDiv.classList.add('hidden');
+
+                // Render items (text, image, audio, video)
+                section.items.forEach(item => {
+                    let element;
+                    if (item.type === 'text') {
+                        element = document.createElement('p');
+                        // Use innerHTML instead of innerText to render HTML tags
+                        element.innerHTML = item.content;
+                    } else if (item.type === 'image') {
+                        element = document.createElement('img');
+                        element.src = item.src;
+                        element.alt = item.alt;
+                        element.classList.add('mt-2', 'w-1/2');
+                    } else if (item.type === 'audio') {
+                        element = document.createElement('audio');
+                        element.controls = true;
+                        const source = document.createElement('source');
+                        source.src = item.src;
+                        source.type = 'audio/mpeg';
+                        element.appendChild(source);
+                    } else if (item.type === 'video') {
+                        element = document.createElement('video');
+                        element.controls = true;
+                        const source = document.createElement('source');
+                        source.src = item.src;
+                        source.type = 'video/mp4';
+                        element.appendChild(source);
+                        element.classList.add('mt-2', 'w-1/2');
+                    }
+                    hiddenContentDiv.appendChild(element);
+                });
+
+
+                sectionDiv.appendChild(hiddenContentDiv);
+
+                // Read more button
+                const readMoreButton = document.createElement('button');
+                readMoreButton.classList.add('text-blue-500');
+                readMoreButton.innerText = "Read more";
+                readMoreButton.onclick = function () {
+                    toggleReadMore(readMoreButton, hiddenContentDiv);
+                };
+
+                sectionDiv.appendChild(readMoreButton);
+                tabContent.appendChild(sectionDiv);
+            });
+        }
+
+        function toggleReadMore(button, contentDiv) {
+            contentDiv.classList.toggle('hidden');
+            button.innerText = contentDiv.classList.contains('hidden') ? 'Read more' : 'Read less';
+        }
+
+        function showTab(tabId) {
+            if (isSearching) return;
+
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            document.querySelectorAll('ul button').forEach(btn => {
+                btn.classList.remove('text-blue-500');
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(tabId + 'Tab').classList.add('text-blue-500');
+
+            renderContent(tabId); // Render content for selected tab
+        }
+
+        function handleTabClick(tabId) {
+            document.getElementById('searchBar').value = ''; // Clear search
+            filterContent(); // Reset filtering
+            showTab(tabId); // Show the clicked tab
+        }
+
+        function filterContent() {
+            const searchQuery = document.getElementById('searchBar').value.toLowerCase();
+            const allTabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('ul button');
+
+            isSearching = searchQuery.length > 0;
+
+            // Show all tabs during search
+            allTabs.forEach(tab => tab.classList.remove('hidden'));
+            buttons.forEach(btn => btn.classList.remove('text-blue-500'));
+
+            document.querySelectorAll('.box').forEach(box => {
+                const content = box.innerText.toLowerCase();
+
+                // Split search query into words
+                const searchWords = searchQuery.split(' ').filter(word => word !== '');
+
+                // Check if all words are present in the content (case-insensitive)
+                const isMatch = searchWords.every(word => content.includes(word));
+
+                if (isMatch) {
+                    box.classList.remove('hidden');
+                } else {
+                    box.classList.add('hidden');
+                }
+            });
+
+            // Reset tabs if no search
+            if (!isSearching) {
+                showTab('topics');
+            }
+        }
+
+        // Show the first tab by default
+        document.addEventListener('DOMContentLoaded', () => {
+            showTab('topics');
+        });
+    </script>
+
+
+</body>
+
+</html>
