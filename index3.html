@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Process Guide</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
     <style>
         body {
             font-family: Arial, sans-serif;
+        }
+
+        .search-highlight {
+            background-color: rgba(255, 255, 0, 0.4);
+            padding: 0 1px;
+            border-radius: 2px;
         }
 
         @media (max-width: 640px) {
@@ -17,22 +23,16 @@
                 white-space: nowrap;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
-                /* Hide scrollbar in Firefox */
             }
 
             .tabs-container::-webkit-scrollbar {
                 display: none;
-                /* Hide scrollbar in WebKit-based browsers */
             }
 
             .tabs-container button {
                 display: inline-block;
                 white-space: nowrap;
             }
-        }
-
-        .highlight {
-            background-color: #fef08a; /* Customize your highlight color here */
         }
     </style>
 </head>
@@ -53,11 +53,16 @@
         <!-- Tabs -->
         <div class="tabs-container flex border-b border-gray-700 mb-4">
             <ul class="flex">
-                <li class="mr-4"><button id="topicsTab" onclick="handleTabClick('topics')" class="px-4 py-2 focus:outline-none">Topics</button></li>
-                <li class="mr-4"><button id="scenariosTab" onclick="handleTabClick('scenarios')" class="px-4 py-2 focus:outline-none">Scenarios</button></li>
-                <li class="mr-4"><button id="mappingTab" onclick="handleTabClick('mapping')" class="px-4 py-2 focus:outline-none">Mapping</button></li>
-                <li class="mr-4"><button id="outreachTab" onclick="handleTabClick('outreach')" class="px-4 py-2 focus:outline-none">Dr. Outreach</button></li>
-                <li class="mr-4"><button id="chasingTab" onclick="handleTabClick('chasing')" class="px-4 py-2 focus:outline-none">Chasing</button></li>
+                <li class="mr-4"><button id="topicsTab" onclick="handleTabClick('topics')"
+                        class="px-4 py-2 focus:outline-none">Topics</button></li>
+                <li class="mr-4"><button id="scenariosTab" onclick="handleTabClick('scenarios')"
+                        class="px-4 py-2 focus:outline-none">Scenarios</button></li>
+                <li class="mr-4"><button id="mappingTab" onclick="handleTabClick('mapping')"
+                        class="px-4 py-2 focus:outline-none">Mapping</button></li>
+                <li class="mr-4"><button id="outreachTab" onclick="handleTabClick('outreach')"
+                        class="px-4 py-2 focus:outline-none">Dr. Outreach</button></li>
+                <li class="mr-4"><button id="chasingTab" onclick="handleTabClick('chasing')"
+                        class="px-4 py-2 focus:outline-none">Chasing</button></li>
             </ul>
         </div>
 
@@ -66,7 +71,6 @@
             <div id="topics" class="tab-content hidden">
                 <!-- Content will be dynamically inserted here -->
             </div>
-
             <div id="scenarios" class="tab-content hidden">
                 <!-- Content will be dynamically inserted here -->
             </div>
@@ -84,139 +88,155 @@
 
     <script>
         let isSearching = false;
-
-        // JSON data (same as before)
         const contentData = {
-    topics: [
-        {
-            title: "Topic 1",
-            description: "Description of topic 1. This is an introductory part of the topic.",
-            items: [
-                { "type": "text", "content": "Content for topic 1. This is the main paragraph that will be shown initially.<br><b>Bold text example</b> and <i>italic text example</i>.<br>&nbsp;&nbsp;&nbsp;&nbsp;This part is indented with a tab space." },
-                { "type": "text", "content": "This is some more filler content for topic 1. We can add some text here to make it appear longer.<br><b>Bold text in the middle of a paragraph.</b><br><i>Italicized text as well.</i><br>&nbsp;&nbsp;&nbsp;&nbsp;Indented text using a tab." },
-                { "type": "text", "content": "A very long paragraph here. The quick brown fox jumps over the lazy dog, repeatedly. This will continue to go on to simulate a lengthy paragraph.<br><b>Bold text in the middle again.</b><br><i>Italicized section here.</i><br>&nbsp;&nbsp;&nbsp;&nbsp;And here is some text with a tab space before it." }
+            topics: [
+                {
+                    title: "Topic 1: Introduction to Process Management",
+                    description: "Understanding the fundamentals of process management and its importance in organizational success.",
+                    items: [
+                        {
+                            type: "text",
+                            content: "Process management is the systematic approach to making an organization's workflow more effective and efficient. Key components include planning, organizing, controlling, and optimizing various business processes.<br><b>Core Principles:</b><br>• Standardization of processes<br>• Continuous improvement<br>• Quality control measures<br><i>Implementation strategies vary by organization size and industry.</i>"
+                        },
+                        {
+                            type: "text",
+                            content: "Effective process management requires clear documentation, regular reviews, and stakeholder engagement. Success metrics should be established and monitored consistently.<br><b>Common Challenges:</b><br>• Resistance to change<br>• Resource allocation<br>• Training requirements<br>&nbsp;&nbsp;&nbsp;&nbsp;Solutions often involve comprehensive change management strategies."
+                        }
+                    ]
+                },
+                {
+                    title: "Topic 2: Advanced Process Optimization",
+                    description: "Deep dive into optimization techniques and advanced strategies for process improvement.",
+                    items: [
+                        {
+                            type: "text",
+                            content: "Advanced process optimization involves sophisticated analysis tools and methodologies. <b>Key approaches include:</b><br>• Six Sigma methodology<br>• Lean management principles<br>• Statistical process control<br><i>Each approach offers unique benefits and applications.</i>"
+                        },
+                        {
+                            type: "text",
+                            content: "Implementation requires careful planning and execution. Success factors include:<br>• Strong leadership support<br>• Clear communication channels<br>• Adequate resource allocation<br>&nbsp;&nbsp;&nbsp;&nbsp;Regular monitoring and adjustment of strategies is essential."
+                        }
+                    ]
+                }
+            ],
+            scenarios: [
+                {
+                    title: "Manufacturing Process Optimization",
+                    description: "Case study of a manufacturing company implementing process improvements to reduce waste and increase efficiency.",
+                    items: [
+                        {
+                            type: "text",
+                            content: "<b>Background:</b><br>A medium-sized manufacturing company faced challenges with production delays and quality issues. Through systematic process analysis and improvement, they achieved significant gains.<br><br><b>Actions Taken:</b><br>• Implemented lean manufacturing principles<br>• Established quality control checkpoints<br>• Trained staff on new procedures"
+                        },
+                        {
+                            type: "text",
+                            content: "<b>Results:</b><br>• 30% reduction in waste<br>• 25% improvement in production time<br>• 15% increase in quality metrics<br><br><i>Key learning points and best practices were documented for future reference.</i>"
+                        }
+                    ]
+                },
+                {
+                    title: "Service Industry Enhancement",
+                    description: "Analysis of a service-based company's journey to improve customer satisfaction through process optimization.",
+                    items: [
+                        {
+                            type: "text",
+                            content: "<b>Challenge:</b><br>Customer service response times were causing satisfaction rates to drop. The company needed to streamline their support processes.<br><br><b>Solution:</b><br>• Implemented new ticketing system<br>• Restructured support team workflow<br>• Developed standard response templates"
+                        }
+                    ]
+                }
+            ],
+            mapping: [
+                {
+                    title: "Process Mapping Fundamentals",
+                    description: "Complete guide to creating and utilizing process maps for business improvement.",
+                    items: [
+                        {
+                            type: "text",
+                            content: "<b>Process Mapping Basics:</b><br>1. Identify the process scope<br>2. Gather necessary information<br>3. Draw the basic flowchart<br>4. Add process details<br>5. Analyze and optimize<br><br><i>Essential tools and techniques for effective mapping</i>"
+                        }
+                    ]
+                }
+            ],
+            outreach: [
+                {
+                    title: "Stakeholder Engagement",
+                    description: "Strategies for effective stakeholder engagement and communication in process improvement initiatives.",
+                    items: [
+                        {
+                            type: "text",
+                            content: "<b>Engagement Strategies:</b><br>• Early stakeholder identification<br>• Communication planning<br>• Regular updates and feedback<br>• Progress tracking and reporting<br><br><i>Building and maintaining stakeholder relationships</i>"
+                        }
+                    ]
+                }
+            ],
+            chasing: [
+                {
+                    title: "Continuous Improvement",
+                    description: "Framework for pursuing and achieving continuous process improvement goals.",
+                    items: [
+                        {
+                            type: "text",
+                            content: "<b>Continuous Improvement Framework:</b><br>1. Set clear objectives<br>2. Measure current performance<br>3. Analyze improvement opportunities<br>4. Implement changes<br>5. Monitor results<br><br><i>Iterative approach to process excellence</i>"
+                        }
+                    ]
+                }
             ]
-        }
-    ],
-    scenarios: [
-        {
-            title: "Scenario 1",
-            description: "Description of scenario 1.",
-            items: [
-                { "type": "text", "content": "This is the first scenario's detailed explanation. It talks about different steps involved in this scenario.<br><b>Step 1:</b> Prepare the materials.<br><b>Step 2:</b> Assemble the resources." },
-                { "type": "text", "content": "In the second part of this scenario, we move on to execution.<br><i>Be sure to follow the instructions carefully.</i>" },
-                { "type": "image", "src": "https://via.placeholder.com/400", "alt": "Scenario 1 Image" }
-            ]
-        },
-        {
-            title: "Scenario 2",
-            description: "Description of scenario 2.",
-            items: [
-                { "type": "text", "content": "This scenario is about risk management. It discusses the importance of assessing risk before proceeding.<br><b>Risk 1:</b> Miscommunication.<br><b>Risk 2:</b> Equipment failure." },
-                { "type": "video", "src": "https://www.w3schools.com/html/movie.mp4" }
-            ]
-        }
-    ],
-    mapping: [
-        {
-            title: "Mapping Process 1",
-            description: "A detailed process on how to map resources effectively.",
-            items: [
-                { "type": "text", "content": "The first step is to identify the key resources involved in the mapping process.<br><b>Identify:</b> Key data, stakeholders, and assets." },
-                { "type": "audio", "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" }
-            ]
-        },
-        {
-            title: "Mapping Process 2",
-            description: "A second method for mapping resources and processes.",
-            items: [
-                { "type": "text", "content": "In this process, we discuss techniques such as mind mapping and flowcharts.<br><i>Visual aids help in simplifying complex systems.</i>" },
-                { "type": "image", "src": "https://via.placeholder.com/400", "alt": "Mapping Process 2 Image" }
-            ]
-        }
-    ],
-    outreach: [
-        {
-            title: "Outreach Strategy 1",
-            description: "An introduction to effective outreach strategies.",
-            items: [
-                { "type": "text", "content": "The first outreach strategy focuses on building relationships with key individuals.<br><b>Step 1:</b> Identify stakeholders.<br><b>Step 2:</b> Initiate communication." },
-                { "type": "video", "src": "https://www.w3schools.com/html/movie.mp4" }
-            ]
-        },
-        {
-            title: "Outreach Strategy 2",
-            description: "Another approach to outreach strategy focusing on digital tools.",
-            items: [
-                { "type": "text", "content": "This outreach strategy makes use of digital platforms like social media and email.<br><i>Be consistent with your messaging.</i>" },
-                { "type": "audio", "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" }
-            ]
-        }
-    ],
-    chasing: [
-        {
-            title: "Chasing Process 1",
-            description: "Process for tracking and chasing leads or objectives.",
-            items: [
-                { "type": "text", "content": "In this process, we discuss how to track and manage potential leads.<br><b>Step 1:</b> Contact leads.<br><b>Step 2:</b> Follow up regularly." },
-                { "type": "text", "content": "Make sure to evaluate the effectiveness of your chasing strategy periodically.<br><i>Adjust based on response rates.</i>" }
-            ]
-        },
-        {
-            title: "Chasing Process 2",
-            description: "A more advanced chasing strategy for larger groups.",
-            items: [
-                { "type": "text", "content": "The second chasing strategy involves segmentation. Divide leads into categories.<br><b>Group 1:</b> High-value leads.<br><b>Group 2:</b> Medium-value leads." },
-                { "type": "audio", "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" }
-            ]
-        }
-    ]
-};
+        };
 
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function highlightText(text, searchWords) {
+            if (!searchWords.length) return text;
+            
+            const escapedWords = searchWords.map(word => escapeRegExp(word));
+            const regex = new RegExp(`(${escapedWords.join('|')})`, 'gi');
+            
+            return text.replace(regex, '<span class="search-highlight">$1</span>');
+        }
 
         function renderContent(tabId) {
             const tabContent = document.getElementById(tabId);
-            tabContent.innerHTML = ""; // Clear current content
+            if (!tabContent) return;
+            
+            tabContent.innerHTML = "";
 
             const data = contentData[tabId];
+            if (!data) return;
+
+            const searchQuery = document.getElementById('searchBar').value.toLowerCase();
+            const searchWords = searchQuery.split(' ').filter(word => word !== '');
 
             data.forEach(section => {
                 const sectionDiv = document.createElement('div');
                 sectionDiv.classList.add('box', 'p-4', 'mb-4', 'border', 'border-gray-700', 'rounded');
 
-                // Title and description
                 const title = document.createElement('h2');
-                title.classList.add('font-bold');
-                title.innerText = section.title;
+                title.classList.add('font-bold', 'text-xl', 'mb-2');
+                title.innerHTML = highlightText(section.title, searchWords);
 
                 const description = document.createElement('p');
-                description.innerText = section.description;
+                description.classList.add('mb-4');
+                description.innerHTML = highlightText(section.description, searchWords);
 
                 sectionDiv.appendChild(title);
                 sectionDiv.appendChild(description);
 
-                // Container for hidden content
                 const hiddenContentDiv = document.createElement('div');
                 hiddenContentDiv.classList.add('hidden');
 
-                // Render items (text, image, audio, video)
                 section.items.forEach(item => {
                     let element;
                     if (item.type === 'text') {
-                        element = document.createElement('p');
-                        element.innerHTML = item.content;
+                        element = document.createElement('div');
+                        element.classList.add('mb-4');
+                        element.innerHTML = highlightText(item.content, searchWords);
                     } else if (item.type === 'image') {
                         element = document.createElement('img');
                         element.src = item.src;
                         element.alt = item.alt;
-                        element.classList.add('mt-2');
-                    } else if (item.type === 'audio') {
-                        element = document.createElement('audio');
-                        element.controls = true;
-                        const source = document.createElement('source');
-                        source.src = item.src;
-                        source.type = 'audio/mpeg';
-                        element.appendChild(source);
+                        element.classList.add('mt-2', 'w-1/2');
                     } else if (item.type === 'video') {
                         element = document.createElement('video');
                         element.controls = true;
@@ -224,18 +244,17 @@
                         source.src = item.src;
                         source.type = 'video/mp4';
                         element.appendChild(source);
-                        element.classList.add('mt-2', 'w-full');
+                        element.classList.add('mt-2', 'w-1/2');
                     }
                     hiddenContentDiv.appendChild(element);
                 });
 
                 sectionDiv.appendChild(hiddenContentDiv);
 
-                // Read more button
                 const readMoreButton = document.createElement('button');
-                readMoreButton.classList.add('text-blue-500');
+                readMoreButton.classList.add('text-blue-500', 'hover:text-blue-400', 'mt-2');
                 readMoreButton.innerText = "Read more";
-                readMoreButton.onclick = function () {
+                readMoreButton.onclick = function() {
                     toggleReadMore(readMoreButton, hiddenContentDiv);
                 };
 
@@ -244,120 +263,68 @@
             });
         }
 
+        function toggleReadMore(button, contentDiv) {
+            contentDiv.classList.toggle('hidden');
+            button.innerText = contentDiv.classList.contains('hidden') ? 'Read more' : 'Read less';
+        }
+
         function showTab(tabId) {
             if (isSearching) return;
 
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.add('hidden');
             });
+            
             document.querySelectorAll('ul button').forEach(btn => {
                 btn.classList.remove('text-blue-500');
             });
-            document.getElementById(tabId).classList.remove('hidden');
-            document.getElementById(tabId + 'Tab').classList.add('text-blue-500');
 
-            renderContent(tabId); // Render content for selected tab
+            const selectedTab = document.getElementById(tabId);
+            const selectedButton = document.getElementById(tabId + 'Tab');
+            
+            if (selectedTab) selectedTab.classList.remove('hidden');
+            if (selectedButton) selectedButton.classList.add('text-blue-500');
+
+            renderContent(tabId);
         }
 
         function handleTabClick(tabId) {
-            document.getElementById('searchBar').value = ''; // Clear search
-            filterContent(); // Reset filtering
-            showTab(tabId); // Show the clicked tab
+            const searchBar = document.getElementById('searchBar');
+            if (searchBar) searchBar.value = '';
+            isSearching = false;
+            showTab(tabId);
         }
 
         function filterContent() {
             const searchQuery = document.getElementById('searchBar').value.toLowerCase();
             const allTabs = document.querySelectorAll('.tab-content');
             const buttons = document.querySelectorAll('ul button');
-            const highlightClass = 'bg-yellow-300'; // CSS class to highlight matching text
 
             isSearching = searchQuery.length > 0;
 
-            // Reset highlights if search query is empty
-            if (!isSearching) {
-                removeHighlights(); // Remove any highlights when the search is cleared
-            }
+            if (isSearching) {
+                allTabs.forEach(tab => {
+                    tab.classList.remove('hidden');
+                    renderContent(tab.id);
+                });
+                
+                buttons.forEach(btn => btn.classList.remove('text-blue-500'));
 
-            // Show all tabs during search
-            allTabs.forEach(tab => tab.classList.remove('hidden'));
-            buttons.forEach(btn => btn.classList.remove('text-blue-500'));
-
-            // Iterate through each content box and check for matching words
-            document.querySelectorAll('.box').forEach(box => {
-                let originalContent = box.innerHTML; // Get the original HTML content
-                let plainContent = box.textContent.toLowerCase(); // Get plain text content for searching
-
-                // Split search query into words
-                const searchWords = searchQuery.split(' ').filter(word => word !== '');
-
-                let isMatch = searchWords.every(word => plainContent.includes(word));
-
-                if (isMatch) {
-                    // Only highlight in the original content (without existing highlights)
-                    let highlightedContent = originalContent; // Preserve HTML structure
-
-                    // Check if content was already highlighted to avoid re-highlighting
-                    searchWords.forEach(word => {
-                        const regex = new RegExp(`(\\b${word}\\b)`, 'gi'); // Match whole words, case-insensitive
-                        highlightedContent = highlightedContent.replace(regex, (match) => {
-                            // If it's already highlighted, leave it as is, otherwise wrap it in <span>
-                            if (match.includes('<span')) {
-                                return match; // Do not highlight if already wrapped
-                            }
-                            return `<span class="${highlightClass}">${match}</span>`;
-                        });
-                    });
-
-                    // Set the updated content with highlights (without touching the previously added highlights)
-                    box.innerHTML = highlightedContent;
-
-                    // Reattach the "Read more" button event listener after updating content
-                    attachReadMoreButtonEvents(box);
-
-                    box.classList.remove('hidden');
-                } else {
-                    box.classList.add('hidden');
-                }
-            });
-
-            // Reset tabs if no search
-            if (!isSearching) {
+                document.querySelectorAll('.box').forEach(box => {
+                    const content = box.innerText.toLowerCase();
+                    const searchWords = searchQuery.split(' ').filter(word => word !== '');
+                    const isMatch = searchWords.every(word => content.includes(word));
+                    box.classList.toggle('hidden', !isMatch);
+                });
+            } else {
                 showTab('topics');
             }
         }
 
-        // Function to remove all highlights
-        function removeHighlights() {
-            document.querySelectorAll('.box').forEach(box => {
-                // Remove all span elements with the bg-yellow-300 class
-                box.innerHTML = box.innerHTML.replace(/<span class="bg-yellow-300">([^<]*)<\/span>/gi, '$1');
-            });
-        }
-
-        // Function to attach the "Read more" event listener to the buttons
-        function attachReadMoreButtonEvents(box) {
-            // Attach event listeners to "Read more" buttons inside the box
-            const readMoreButtons = box.querySelectorAll('button');
-            readMoreButtons.forEach(button => {
-                if (!button.hasAttribute('data-listener-attached')) {
-                    button.setAttribute('data-listener-attached', 'true'); // Prevent duplicate listeners
-                    button.addEventListener('click', function () {
-                        const contentDiv = button.previousElementSibling;
-                        toggleReadMore(button, contentDiv);
-                    });
-                }
-            });
-        }
-
-        // Function to toggle "Read more" and "Read less"
-        function toggleReadMore(button, contentDiv) {
-            contentDiv.classList.toggle('hidden');
-            button.innerText = contentDiv.classList.contains('hidden') ? 'Read more' : 'Read less';
-        }
-
-        // Initialize the first tab to be shown
-        showTab('topics');
+        // Initialize the first tab on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            showTab('topics');
+        });
     </script>
 </body>
-
 </html>
