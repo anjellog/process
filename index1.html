@@ -86,39 +86,84 @@
         let isSearching = false;
 
         const contentData = {
-    topics: [
-        // Add topics data here
-    ],
-    scenarios: [
-        {
-            title: "PNA (Within 30 Days)",
-            description: "This scenario covers the PNA process for cases within 30 days.",
-            items: [
-                { type: "text", content: "<b>1st Touch:</b> No chasing to DR with denial. Endorse to PT call." },
-                { type: "text", content: "<b>2nd Touch:</b> No chasing to DR with denial. Endorse to PT call team if no successful call." },
-                // ... other items
+            topics: [
+                {
+                    title: "Topic 1",
+                    description: "Description of topic 1. This is an introductory part of the topic.",
+                    items: [
+                        {  "type": "text",
+                            "content": "Content for topic 1. This is the main paragraph that will be shown initially.<br><b>Bold text example</b> and <i>italic text example</i>.<br>&nbsp;&nbsp;&nbsp;&nbsp;This part is indented with a tab space."
+                        },
+                        {
+                            "type": "text",
+                            "content": "This is some more filler content for topic 1. We can add some text here to make it appear longer.<br><b>Bold text in the middle of a paragraph.</b><br><i>Italicized text as well.</i><br>&nbsp;&nbsp;&nbsp;&nbsp;Indented text using a tab."
+                        },
+                        {
+                            "type": "text",
+                            "content": "A very long paragraph here. The quick brown fox jumps over the lazy dog, repeatedly. This will continue to go on to simulate a lengthy paragraph.<br><b>Bold text in the middle again.</b><br><i>Italicized section here.</i><br>&nbsp;&nbsp;&nbsp;&nbsp;And here is some text with a tab space before it."
+                        }
+
+                    ]
+                },
+                {
+                    title: "Eto ay topic",
+                    description: "Description of topic 2. This is another introductory part of the second topic.",
+                    items: [
+                        { type: "text", content: "Content for topic 2. More details can be provided here." },
+                        { type: "text", content: "<br> <b>Another lengthy paragraph to demonstrate more detailed content. </b>This one describes the second topic in full detail, including extended explanations and examples." },
+                        { type: "text", content: "The second topic might include a few insights into how things work, or a deeper look into the scenario. It's always good to have additional text to give depth to the content." },
+                        { type: "video", src: "https://www.w3schools.com/html/mov_bbb.mp4" }
+                    ]
+                }
+            ],
+            scenarios: [
+                {
+                    title: "Scenario 1",
+                    description: "Details about scenario 1, this is a longer scenario description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    items: [
+                        { type: "image", src: "https://via.placeholder.com/150", alt: "Placeholder Image" }
+                    ]
+                },
+                {
+                    title: "Scenario 2",
+                    description: "Details about scenario 2. A lot of text here to demonstrate longer filler content. This is more detailed information that can include context about the scenario, challenges, and possible outcomes.",
+                    items: [
+                        { type: "audio", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" }
+                    ]
+                }
+            ],
+            mapping: [
+                {
+                    title: "Mapping Guide 1",
+                    description: "Instructions for mapping guide 1... This section goes on with step-by-step details of how to complete a specific task, utilizing various tools and techniques. It's important to provide an in-depth guide with examples, screenshots, and further elaboration.",
+                    items: [
+                        { type: "video", src: "https://www.w3schools.com/html/mov_bbb.mp4" }
+                    ]
+                }
+            ],
+            outreach: [
+                {
+                    title: "Outreach Strategy 1",
+                    description: "Steps for outreach strategy 1... This section covers the strategy in detail, breaking down each phase, its importance, and how to execute it properly. This extended description is here to show how content can be dynamically presented with lengthy text and actions.",
+                    items: [
+                        { type: "text", content: "Step 1: Initial outreach..." },
+                        { type: "text", content: "Step 2: Follow-up communication..." },
+                        { type: "text", content: "Step 3: Long-term engagement..." }
+                    ]
+                }
+            ],
+            chasing: [
+                {
+                    title: "Chasing Techniques",
+                    description: "Details on chasing techniques... Chasing involves techniques for closing deals, handling objections, and maintaining a strong relationship. This section is designed to help individuals understand the various strategies in the chasing process, with examples and tactics for success.",
+                    items: [
+                        { type: "text", content: "Chasing technique 1: Overview..." },
+                        { type: "text", content: "Chasing technique 2: Effective communication..." }
+                    ]
+                }
             ]
-        },
-        {
-            title: "PNA (More Than 30 Days)",
-            description: "This scenario covers the PNA process for cases more than 30 days old.",
-            items: [
-                { type: "text", content: "<b>1st Touch:</b> Send request to DR based on restriction." },
-                // ... other items
-            ]
-        },
-        // More scenarios
-    ],
-    mapping: [
-        // Add mapping data here
-    ],
-    outreach: [
-        // Add outreach data here
-    ],
-    chasing: [
-        // Add chasing data here
-    ]
-};
+        };
+
         function renderContent(tabId) {
             const tabContent = document.getElementById(tabId);
             tabContent.innerHTML = ""; // Clear current content

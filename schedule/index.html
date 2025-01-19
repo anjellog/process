@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jollibee Schedule Maker</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f4f4f4;
+      text-align: left;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto py-8">
+    <h1 class="text-2xl font-bold mb-6 text-center">Jollibee Schedule Maker</h1>
+
+    <!-- Schedule Output -->
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+      <h2 class="text-xl font-semibold mb-4">Generated Schedule</h2>
+      <button class="bg-green-500 text-white px-4 py-2 rounded mb-4" onclick="generateSchedule()">Generate Schedule</button>
+      <div id="scheduleOutput">
+        <!-- Dynamic Schedule Output -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sample Employee Data
+    const employees = [
+      { name: 'Laura', type: 'full_time', station: 'POS 1', skills: ['Menu board', 'Sanitation'] },
+      { name: 'Rean', type: 'full_time', station: 'POS 1', skills: ['Tray Cleaning', 'Floor Mopping'] },
+      { name: 'Angel', type: 'full_time', station: 'POS 2', skills: ['Sanitation', 'Table Cleaning'] },
+      { name: 'Charlex', type: 'full_time', station: 'MID', skills: ['Sanitize Counter'] },
+      { name: 'Nasi', type: 'full_time', station: 'ASSEMBLER 1/AZURE', skills: ['Assembly'] },
+      { name: 'Riza', type: 'full_time', station: 'ASSEMBLER 2/AZURE', skills: ['Assembly'] },
+      { name: 'Robin', type: 'full_time', station: 'ASSEMBLER 3', skills: ['Assembly'] },
+      { name: 'Eloyd', type: 'full_time', station: 'SODA', skills: ['Refill Tumblers', 'Mix Cleaning'] },
+      { name: 'Daisy', type: 'part_time', station: 'AC/JEDS', skills: ['Assistance'] },
+      { name: 'Kevin', type: 'part_time', station: 'FOODPANDA', skills: ['Delivery Prep'] },
+      { name: 'Jerome', type: 'full_time', station: 'Zone A/UM/Out pending', skills: ['Zone Management'] },
+      { name: 'Archie', type: 'full_time', station: 'Zone B', skills: ['Sanitation'] },
+      { name: 'Jezel', type: 'full_time', station: 'JEDS', skills: ['Station Maintenance'] },
+      { name: 'DJ', type: 'full_time', station: 'KITCHEN', skills: ['Cooking'] },
+      { name: 'Gelo', type: 'full_time', station: 'Grill', skills: ['Grilling'] },
+      { name: 'Lei', type: 'full_time', station: 'Pantry', skills: ['Food Prep'] },
+      { name: 'Sherwin', type: 'part_time', station: 'Fry', skills: ['Frying'] },
+      { name: 'Carlo', type: 'full_time', station: 'PC', skills: ['Inventory Management'] }
+    ];
+
+    const stations = [
+      'POS 1', 'POS 2', 'MID', 'ASSEMBLER 1/AZURE', 'ASSEMBLER 2/AZURE', 'ASSEMBLER 3', 'ASSEMBLER 4', '2ND TC', 'SODA',
+      'FOODPANDA', 'AC/JEDS', 'PG/PB', 'PB/PG', 'DINING/ASSEMBLER', 'Zone A/UM/Out pending', 'OUT PENDING', 'Zone B',
+      'JEDS', 'JEDS AND COUNTER ASSEMBLER', 'RIDERS', 'KITCHEN', 'DJ', 'Grill', 'Back Up', 'Pantry', 'Fry', 'PC',
+      'Stockman/Reliever/Fries Bagger', 'Fries Bagger/Mid Fry'
+    ];
+
+    function getRandomTime() {
+      const startHour = Math.floor(Math.random() * 12) + 5; // Random start between 5 AM and 5 PM
+      const endHour = startHour + 8; // Fixed 8-hour shifts
+      return `${startHour}:00-${endHour > 24 ? endHour - 24 : endHour}:00`;
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function generateSchedule() {
+      const scheduleOutput = document.getElementById('scheduleOutput');
+      scheduleOutput.innerHTML = '';
+
+      if (employees.length === 0) {
+        scheduleOutput.textContent = 'No employees available to schedule.';
+        return;
+      }
+
+      // Shuffle employees to vary assignments
+      shuffleArray(employees);
+
+      // Assign random times
+      employees.forEach(employee => {
+        employee.preferredTime = getRandomTime();
+        employee.station = stations[Math.floor(Math.random() * stations.length)];
+      });
+
+      // Group employees by station
+      const groupedByStation = employees.reduce((acc, employee) => {
+        const station = employee.station || 'Unassigned';
+        if (!acc[station]) acc[station] = [];
+        acc[station].push(employee);
+        return acc;
+      }, {});
+
+      // Generate schedule table
+      let scheduleHTML = '<table class="table-auto w-full">';
+      scheduleHTML += '<thead><tr><th>Station</th><th>Employee</th><th>Schedule</th><th>HRS</th><th>Break</th><th>Tasks</th></tr></thead>';
+      scheduleHTML += '<tbody>';
+
+      for (const [station, employees] of Object.entries(groupedByStation)) {
+        employees.forEach((employee, index) => {
+          scheduleHTML += '<tr>';
+          if (index === 0) {
+            scheduleHTML += `<td rowspan="${employees.length}" class="font-bold bg-gray-200">${station}</td>`;
+          }
+          scheduleHTML += `
+            <td>${employee.name}</td>
+            <td>${employee.preferredTime}</td>
+            <td>8.0</td>
+            <td>60</td>
+            <td>${employee.skills.join(', ')}</td>
+          </tr>`;
+        });
+      }
+
+      scheduleHTML += '</tbody></table>';
+
+      scheduleOutput.innerHTML = scheduleHTML;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+curl "https://generativelanguage.googleapis.com/upload/v1beta/files?key=AIzaSyDSFHI1uY8tZEWBTDVaKw5NULqVcA9e4Lk" \
+    -H "X-Goog-Upload-Command: start, upload, finalize" \
+    -H "X-Goog-Upload-Header-Content-Type: application/pdf" \
+    -H "Content-Type: application/json" \
+    --data-binary "@Process Guide.pdf"

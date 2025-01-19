@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Process Guide</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+
+  <!-- Search Bar -->
+  <div class="mb-4">
+    <input type="text" id="search" class="p-2 w-full border rounded-lg" placeholder="Search...">
+  </div>
+
+  <!-- Tabs -->
+  <div class="flex border-b-2">
+    <button class="tab-button p-4 flex-1 text-center" onclick="showTab('tab1')">Tab 1</button>
+    <button class="tab-button p-4 flex-1 text-center" onclick="showTab('tab2')">Tab 2</button>
+    <!-- Add more tabs here -->
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content" id="tab1">
+    <h2 class="text-xl font-semibold mb-2">Tab 1 Content</h2>
+    <p>Here is some content with <img src="image.jpg" alt="image"> inside this section.</p>
+  </div>
+  <div class="tab-content hidden" id="tab2">
+    <h2 class="text-xl font-semibold mb-2">Tab 2 Content</h2>
+    <p>Another section with different content.</p>
+  </div>
+  <!-- Add more content sections here -->
+
+  <script>
+    // Function to show the selected tab
+    function showTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => tab.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+    }
+
+    // Global Search functionality
+    document.getElementById('search').addEventListener('input', function() {
+      const query = this.value.toLowerCase();
+      const sections = document.querySelectorAll('.tab-content p');
+      
+      sections.forEach(section => {
+        const content = section.textContent.toLowerCase();
+        if (content.includes(query)) {
+          section.parentElement.classList.remove('hidden');
+        } else {
+          section.parentElement.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
