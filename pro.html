@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini AI PDF Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg">
+        <div class="p-4 bg-gray-800 text-white rounded-t-lg">
+            <h1 class="text-xl font-bold">Gemini AI PDF Chatbot</h1>
+            <p id="status" class="text-sm text-gray-300 mt-2"></p>
+        </div>
+
+        <div class="p-4 border-b">
+            <input type="file" 
+                   id="pdfInput" 
+                   accept=".pdf"
+                   class="block w-full text-sm text-gray-500
+                          file:mr-4 file:py-2 file:px-4
+                          file:rounded-md file:border-0
+                          file:text-sm file:font-semibold
+                          file:bg-blue-500 file:text-white
+                          hover:file:bg-blue-600">
+        </div>
+
+        <div id="chatBox" class="h-[400px] overflow-y-auto p-4 space-y-4">
+            <!-- Chat messages will appear here -->
+        </div>
+
+        <div class="p-4 border-t">
+            <div class="flex gap-2">
+                <input type="text" 
+                       id="userInput" 
+                       class="flex-1 p-2 border rounded"
+                       placeholder="Ask a question about the PDF..."
+                       onkeypress="if(event.key === 'Enter') sendMessage()">
+                <button onclick="sendMessage()" 
+                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Send
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = 'AIzaSyDSFHI1uY8tZEWBTDVaKw5NULqVcA9e4Lk';
+        let fileUri = null;
+        let conversationHistory = [];
+
+        async function uploadFile(file) {
+            try {
+                updateStatus('Uploading PDF...');
+                
+                const numBytes = file.size;
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const response = await fetch(`https://generativelanguage.googleapis.com/upload/v1beta/files?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-Goog-Upload-Command': 'start, upload, finalize',
+                        'X-Goog-Upload-Header-Content-Length': numBytes,
+                        'X-Goog-Upload-Header-Content-Type': 'application/pdf'
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+                fileUri = data.file.uri;
+                updateStatus('PDF uploaded successfully!');
+                
+                // Add initial system message
+                conversationHistory = [
+                    {
+                        role: "user",
+                        parts: [{
+                            fileData: {
+                                fileUri: fileUri,
+                                mimeType: "application/pdf"
+                            }
+                        }]
+                    },
+                    {
+                        role: "model",
+                        parts: [{
+                            text: "Please ask your questions. I will do my best to answer them based on the provided PDF."
+                        }]
+                    }
+                ];
+                
+                addMessageToChat('bot', 'PDF loaded! You can now ask questions about it.');
+            } catch (error) {
+                console.error('Upload error:', error);
+                updateStatus('Error uploading PDF');
+            }
+        }
+
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput').value.trim();
+            if (!userInput || !fileUri) return;
+
+            addMessageToChat('user', userInput);
+            document.getElementById('userInput').value = '';
+            updateStatus('Getting response...');
+
+            try {
+                // Add user message to conversation history
+                conversationHistory.push({
+                    role: "user",
+                    parts: [{
+                        text: userInput
+                    }]
+                });
+
+                const response = await fetch(
+                    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${API_KEY}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            contents: conversationHistory,
+                            systemInstruction: {
+                                role: "user",
+                                parts: [{
+                                    text: "You will use the pdf file to answer all my questions about the process."
+                                }]
+                            },
+                            generationConfig: {
+                                temperature: 1,
+                                topK: 40,
+                                topP: 0.95,
+                                maxOutputTokens: 8192,
+                                responseMimeType: "text/plain"
+                            }
+                        })
+                    }
+                );
+
+                const data = await response.json();
+                const botResponse = data.candidates[0].content.parts[0].text;
+                
+                // Add bot response to conversation history
+                conversationHistory.push({
+                    role: "model",
+                    parts: [{
+                        text: botResponse
+                    }]
+                });
+
+                addMessageToChat('bot', botResponse);
+                updateStatus('');
+            } catch (error) {
+                console.error('Error:', error);
+                updateStatus('Error getting response');
+            }
+        }
+
+        function addMessageToChat(sender, message) {
+            const chatBox = document.getElementById('chatBox');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+            
+            const bubble = document.createElement('div');
+            bubble.className = `max-w-[70%] p-3 rounded-lg ${
+                sender === 'user' 
+                    ? 'bg-blue-500 text-white' 
+                    : 'bg-gray-200 text-gray-800'
+            }`;
+            bubble.textContent = message;
+            
+            messageDiv.appendChild(bubble);
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function updateStatus(message) {
+            document.getElementById('status').textContent = message;
+        }
+
+        // Set up file input handler
+        document.getElementById('pdfInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                uploadFile(file);
+            }
+        });
+    </script>
+</body>
+</html>
