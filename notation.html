@@ -5,18 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notation</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
 </head>
-<body class="bg-gray-800 text-gray-200 font-sans p-4">
+<body class="bg-gray-900 text-gray-100 font-sans p-4">
   <div class="container mx-auto max-w-lg space-y-4">
-    <div class="flex items-center box border border-gray-700 rounded p-2">
-      <label for="date" class="font-bold text-blue-300 w-1/4">Date:</label>
-      <input type="text" id="date" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded" placeholder="Enter date manually">
+
+    <!-- Date Input -->
+    <div class="flex items-center bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="date" class="font-bold text-blue-400 w-1/4">Date:</label>
+      <input type="text" id="date" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter date manually">
     </div>
 
-    <div class="flex items-center box border border-gray-700 rounded p-2">
-      <label for="order-type" class="font-bold text-blue-300 w-1/4">Order Type:</label>
-      <select id="order-type" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded">
+    <!-- Order Type Dropdown -->
+    <div class="flex items-center bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="order-type" class="font-bold text-blue-400 w-1/4">Order Type:</label>
+      <select id="order-type" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
         <option value="na" selected>N/A</option>
         <option value="initial">Initial</option>
         <option value="resupply">Resupply</option>
@@ -25,19 +27,22 @@
       </select>
     </div>
 
-    <div class="flex items-center box border border-gray-700 rounded p-2">
-      <label for="order-id" class="font-bold text-blue-300 w-1/4">Order ID:</label>
-      <input type="number" id="order-id" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded" value="N/A">
+    <!-- Order ID Input -->
+    <div class="flex items-center bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="order-id" class="font-bold text-blue-400 w-1/4">Order ID:</label>
+      <input type="number" id="order-id" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" value="N/A">
     </div>
 
-    <div class="flex items-center box border border-gray-700 rounded p-2">
-      <label for="cn" class="font-bold text-blue-300 w-1/4">CN:</label>
-      <input type="text" id="cn" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded" value="N/A">
+    <!-- CN Input -->
+    <div class="flex items-center bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="cn" class="font-bold text-blue-400 w-1/4">CN:</label>
+      <input type="text" id="cn" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" value="N/A">
     </div>
 
-    <div class="flex items-center box border border-gray-700 rounded p-2">
-      <label for="ss" class="font-bold text-blue-300 w-1/4">SS:</label>
-      <select id="ss" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded">
+    <!-- SS Dropdown -->
+    <div class="flex items-center bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="ss" class="font-bold text-blue-400 w-1/4">SS:</label>
+      <select id="ss" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
         <option value="na" selected>N/A</option>
         <option value="good">Good</option>
         <option value="needed-no-ss">Needed - No SS on File</option>
@@ -46,80 +51,97 @@
       </select>
     </div>
 
-    <div class="flex items-center box border border-gray-700 rounded p-2">
-      <label for="rx" class="font-bold text-blue-300 w-1/4">RX:</label>
-      <select id="rx" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded">
+    <!-- RX Dropdown -->
+    <div class="flex items-center bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="rx" class="font-bold text-blue-400 w-1/4">RX:</label>
+      <select id="rx" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
         <option value="na" selected>N/A</option>
         <option value="good">Good</option>
         <option value="missing-hcpcs">Needed - Missing HCPCS</option>
-        <option value="no-specification">Needed - RX for all supplies no specification</option>
-        <option value="not-initialed">Needed - countersign not initialed/dated</option>
-        <option value="quantity-does-not-matched">Needed - Quantity does not matched</option>
+        <option value="no-specification">Needed - RX for all supplies, no specification</option>
+        <option value="not-initialed">Needed - countersign</option>
+        <option value="not-esigned">Needed - not e-signed/signed date is printed</option>
+        <option value="no-qf">Needed - No Q&F</option>
         <option value="pecos-dr">Needed - Pecos Dr.</option>
+        <option value="quantity-does-not-matched">Needed - Quantity does not matched</option>
         <option value="conflicting-quantity">Needed - Conflicting Quantity</option>
+        <option value="blanket">Needed - Blanket RX</option>
         <option value="no-rx">Needed - No RX on file</option>
         <option value="rx-expired">Needed - RX expired</option>
       </select>
     </div>
 
-    <div id="missing-hcpcs-input" class="flex items-center hidden box border border-gray-700 rounded p-2">
-      <label for="missing-hcpcs" class="font-bold text-red-300 w-1/4">Specify Missing HCPCS:</label>
-      <input type="text" id="missing-hcpcs" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded" placeholder="Enter Missing HCPCS">
+    <!-- Missing HCPCS Input -->
+    <div id="missing-hcpcs-input" class="flex items-center hidden bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="missing-hcpcs" class="font-bold text-red-400 w-1/4">Specify Missing HCPCS:</label>
+      <input type="text" id="missing-hcpcs" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter Missing HCPCS">
     </div>
 
-    <div id="quantity-mismatch-input" class="flex items-center hidden box border border-gray-700 rounded p-2">
-      <label for="quantity-mismatch-hcpcs" class="font-bold text-red-300 w-1/4">Specify HCPCS for Mismatch:</label>
-      <input type="text" id="quantity-mismatch-hcpcs" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded" placeholder="Enter HCPCS for Quantity Mismatch">
+    <!-- Quantity Mismatch Input -->
+    <div id="quantity-mismatch-input" class="flex items-center hidden bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="quantity-mismatch-hcpcs" class="font-bold text-red-400 w-1/4">Specify HCPCS for Mismatch:</label>
+      <input type="text" id="quantity-mismatch-hcpcs" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter HCPCS for Quantity Mismatch">
     </div>
 
-    <div class="flex items-center box border border-gray-700 rounded p-2">
-      <label for="par" class="font-bold text-blue-300 w-1/4">PAR:</label>
-      <input type="text" id="par" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded" value="N/A" readonly>
+    <!-- PAR Input -->
+    <div class="flex items-center bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="par" class="font-bold text-blue-400 w-1/4">PAR:</label>
+      <input type="text" id="par" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" value="N/A" readonly>
     </div>
 
-    <div class="flex items-center box border border-gray-700 rounded p-2">
-      <label for="e-document" class="font-bold text-blue-300 w-1/4">E-Document Service:</label>
-      <select id="e-document" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded">
+    <!-- E-Document Service Dropdown -->
+    <div class="flex items-center bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="e-document" class="font-bold text-blue-400 w-1/4">E-Document Service:</label>
+      <select id="e-document" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
         <option value="na" selected>N/A</option>
         <option value="goscripts">GoScripts</option>
         <option value="parachute">Parachute</option>
       </select>
     </div>
 
-    <div class="flex items-center box border border-gray-700 rounded p-2">
-      <label class="font-bold text-blue-300 w-1/4">Called/Faxed Doctor:</label>
-      <textarea id="called" rows="1" class="w-5/12 bg-gray-700 text-gray-200 p-2 mr-2 rounded" placeholder="Called"></textarea>
-      <textarea id="faxed" rows="1" class="w-4/12 bg-gray-700 text-gray-200 p-2 mr-2 rounded" placeholder="Faxed"></textarea>
+    <!-- Called/Faxed Doctor Textareas -->
+    <div class="flex items-center bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label class="font-bold text-blue-400 w-1/4">Called/Faxed Doctor:</label>
+      <textarea id="called" rows="1" class="w-5/12 bg-gray-700 text-gray-100 p-2 mr-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Called"></textarea>
+      <textarea id="faxed" rows="1" class="w-4/12 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Faxed"></textarea>
     </div>
 
-    <div class="flex items-center box border border-gray-700 rounded p-2">
-      <label for="patient-call" class="font-bold text-blue-300 w-1/4">Patient Call:</label>
-      <select id="patient-call" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded">
+    <!-- Patient Call Dropdown -->
+    <div class="flex items-center bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="patient-call" class="font-bold text-blue-400 w-1/4">Patient Call:</label>
+      <select id="patient-call" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
         <option value="N/A" selected>N/A</option>
-        <option value="needed">PATIENTCALLNEEDED</option>
+        <option value="PATIENTCALLNEEDED - To Confirm Dr.">PATIENTCALLNEEDED - To Confirm Dr.</option>
+        <option value="PATIENTCALLNEEDED - To Confirm New Dr. Information">PATIENTCALLNEEDED - To Confirm New Dr. Information</option>
+        <option value="PATIENTCALLNEEDED - To Advise Denial from Dr.">PATIENTCALLNEEDED - To Advise Denial from Dr.</option>
+        <option value="PATIENTCALLNEEDED - To Advise Patient Needs Appointment">PATIENTCALLNEEDED - To Advise Patient Needs Appointment</option>
+        <option value="PATIENTCALLNEEDED - To Confirm Order">PATIENTCALLNEEDED - To Confirm Order</option>
       </select>
     </div>
 
-    <div class="flex items-center box border border-gray-700 rounded p-2">
-      <label for="doctor-name" class="font-bold text-blue-300 w-1/4">Doctor Name:</label>
-      <textarea id="doctor-name" rows="1" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded" placeholder="Separate multiple names with ' | '"></textarea>
+    <!-- Doctor Name Textarea -->
+    <div class="flex items-center bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="doctor-name" class="font-bold text-blue-400 w-1/4">Doctor Name:</label>
+      <textarea id="doctor-name" rows="1" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Separate multiple names with ' | '"></textarea>
     </div>
 
-    <div class="flex items-center box border border-gray-700 rounded p-2">
-      <label for="npi" class="font-bold text-blue-300 w-1/4">NPI:</label>
-      <textarea id="npi" rows="1" class="w-3/4 bg-gray-700 text-gray-200 p-2 rounded" placeholder="Enter NPI separated by ' | '"></textarea>
+    <!-- NPI Textarea -->
+    <div class="flex items-center bg-gray-800 border border-gray-700 rounded-lg p-3 hover:border-blue-400 transition-colors">
+      <label for="npi" class="font-bold text-blue-400 w-1/4">NPI:</label>
+      <textarea id="npi" rows="1" class="w-3/4 bg-gray-700 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter NPI separated by ' | '"></textarea>
     </div>
 
-    <div>
-      <label class="block font-bold mb-1 text-blue-300">Status Update:</label>
-      <div class="space-y-2 bg-gray-700 p-4 rounded">
+    <!-- Status Update Checkboxes -->
+    <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 hover:border-blue-400 transition-colors">
+      <label class="block font-bold mb-2 text-blue-400">Status Update:</label>
+      <div class="space-y-2">
         <label class="block"><input type="checkbox" class="mr-2"> Checked SNAP and BT.</label>
         <label class="block"><input type="checkbox" class="mr-2"> Mapped and verified RX dated</label>
         <label class="block"><input type="checkbox" class="mr-2"> No valid RX found on BT and SNAP.</label>
         <label class="block"><input type="checkbox" class="mr-2"> Still no valid RX found on BT and SNAP.</label>
         <label class="block"><input type="checkbox" class="mr-2"> As per previous note, </label>
-        <label class="block"><input type="checkbox" class="mr-2"> Called Dr. ...</label>
-        <label class="block"><input type="checkbox" class="mr-2"> Sent  mail request to Dr. via POC - </label>
+        <label class="block"><input type="checkbox" class="mr-2"> Called Dr. </label>
+        <label class="block"><input type="checkbox" class="mr-2"> Dr. is in DNC/DNF with POC, Sent email request to POC- </label>
         <label class="block"><input type="checkbox" class="mr-2"> ENDORSEDPOC</label>
         <label class="block"><input type="checkbox" class="mr-2"> Endorsed to PT calling team</label>
         <label class="block"><input type="checkbox" class="mr-2"> Patient is not due for pt call.</label>
@@ -128,28 +150,27 @@
       </div>
     </div>
 
+    <!-- Reset and Generate Buttons -->
     <div class="flex justify-between">
-      <button id="reset" class="bg-red-500 text-white px-4 py-2 rounded">Reset</button>
-      <button id="generate" class="bg-green-500 text-white px-4 py-2 rounded">Generate</button>
-    </div>
-    <br>
-    <div>
-    <div class="flex justify-between mb-2" >
-      <label for="output" class="block font-bold mb-1 text-blue-300">Output:</label>
-      <button id="copy-btn" class="bg-blue-500 text-white px-4 py-2 rounded ml-2">Copy</button>
-    </div>
-      <div class="flex items-center justify-between">
-        <textarea id="output" rows="15" class="w-full bg-gray-700 text-gray-200 p-2 rounded"></textarea>
-      </div>
+      <button id="reset" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">Reset</button>
+      <button id="generate" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors">Generate</button>
     </div>
 
+    <!-- Output Section -->
+    <div class="mt-4">
+      <div class="flex justify-between mb-2">
+        <label for="output" class="block font-bold text-blue-400">Output:</label>
+        <button id="copy-btn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Copy</button>
+      </div>
+      <textarea id="output" rows="15" class="w-full bg-gray-800 text-gray-100 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+    </div>
+
+    <!-- Download and Clear Cookies Buttons -->
     <div class="flex justify-between mt-4">
-        <button id="download-btn" class="bg-yellow-500 text-white px-4 py-2 rounded">Download</button>
-        <button id="clear-cookies-btn" class="bg-gray-500 text-white px-4 py-2 rounded">Clear Cookies</button>
-      </div>
+      <button id="download-btn" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-colors">Download</button>
+      <button id="clear-cookies-btn" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors">Clear Cookies</button>
+    </div>
   </div>
-
-  
 
   <script>
     // Reset button event listener
@@ -226,12 +247,15 @@
         'na': 'N/A',
         'missing-hcpcs': 'Needed - Missing HCPCS',
         'no-specification': 'Needed - RX for all supplies no specification',
-        'not-initialed': 'Needed - countersign not initialed/dated',
+        'not-initialed': 'Needed - countersign',
         'quantity-does-not-matched': 'Needed - Quantity does not matched',
         'pecos-dr': 'Needed - Pecos Dr.',
         'conflicting-quantity': 'Needed - Conflicting Quantity',
         'no-rx': 'Needed - No RX on file',
+        'not-esigned': 'Needed - not e-signed/signed date is printed',
         'rx-expired': 'Needed - RX expired',
+        'blanket': 'Needed - Blanket RX',
+        'no-qf': 'Needed - No Q&F',
         'good': 'Good'
       }[document.getElementById('rx').value];
 
@@ -239,6 +263,15 @@
 
       const missingHcpcs = document.getElementById('missing-hcpcs').value;
       const quantityMismatchHcpcs = document.getElementById('quantity-mismatch-hcpcs').value;
+
+      const rxValue = document.getElementById('rx').value;
+  let rxOutput = rx;
+
+  if (rxValue === 'missing-hcpcs' && missingHcpcs) {
+    rxOutput += ` ${missingHcpcs}`;
+  } else if (rxValue === 'quantity-does-not-matched' && quantityMismatchHcpcs) {
+    rxOutput += ` ${quantityMismatchHcpcs}`;
+  }
 
       const edoc = {
         'na': 'N/A',
@@ -267,7 +300,7 @@ Order Type: ${orderTypeValue}
 Order ID: ${orderId}
 CN: ${cn}
 SS: ${ss}
-RX: ${rx}${missingHcpcs ? ` ${missingHcpcs}` : ''}${quantityMismatchHcpcs ? ` ${quantityMismatchHcpcs}` : ''}
+RX: ${rxOutput}
 PAR: N/A
 E-Document Service: ${edoc}
 Called/Faxed Doctor: ${calledFaxed}
@@ -280,94 +313,91 @@ Status Updates: ${statusUpdates.join(', ')}
       document.getElementById('output').value = output.trim();
     });
 
-
-
-    
+    // Copy button event listener
     document.getElementById('copy-btn').addEventListener('click', () => {
-  const output = document.getElementById('output');
-  output.select();
-  document.execCommand('copy');
+      const output = document.getElementById('output');
+      output.select();
+      document.execCommand('copy');
 
-  // Read the current data stored in the cookie
-  let existingData = getCookie('outputData');
-  console.log('Existing data from cookie:', existingData);
+      // Read the current data stored in the cookie
+      let existingData = getCookie('outputData');
+      console.log('Existing data from cookie:', existingData);
 
-  // Get the new copied text
-  const newOutput = output.value.trim();
-  console.log('New copied output:', newOutput);
+      // Get the new copied text
+      const newOutput = output.value.trim();
+      console.log('New copied output:', newOutput);
 
-  // Check if new copied text is not empty
-  if (newOutput) {
-    // If there's existing data, append the new text
-    if (existingData) {
-      existingData += `\n\n------------------------------------------------------\n\n${newOutput}`;
-    } else {
-      // If no existing data, just use the new copied text
-      existingData = newOutput;
+      // Check if new copied text is not empty
+      if (newOutput) {
+        // If there's existing data, append the new text
+        if (existingData) {
+          existingData += `\n\n------------------------------------------------------\n\n${newOutput}`;
+        } else {
+          // If no existing data, just use the new copied text
+          existingData = newOutput;
+        }
+
+        // Save the updated data back to the cookie
+        setCookie('outputData', existingData, 365);
+        console.log('Updated data to save:', existingData);
+      } else {
+        console.log('No new output to append.');
+      }
+    });
+
+    // Download button event listener
+    document.getElementById('download-btn').addEventListener('click', () => {
+      const data = getCookie('outputData');
+      console.log('Data to download:', data);
+
+      if (!data) {
+        alert('No data to download.');
+        return;
+      }
+
+      // Get today's date
+      const today = new Date();
+      const formattedDate = today.toISOString().split('T')[0]; // This gives YYYY-MM-DD format
+
+      // Set the filename to be the current date
+      const fileName = `Notation_${formattedDate}.txt`;
+
+      const blob = new Blob([data], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      link.click();
+    });
+
+    // Clear Cookies button event listener
+    document.getElementById('clear-cookies-btn').addEventListener('click', () => {
+      clearCookie('outputData');
+      console.log('Cookies cleared');
+    });
+
+    // Utility functions for handling cookies
+    function setCookie(name, value, days) {
+      const expires = new Date();
+      expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+      document.cookie = `${name}=${encodeURIComponent(value)};expires=${expires.toUTCString()};path=/`;
+      console.log(`Cookie set: ${name}=${value}`);
     }
 
-    // Save the updated data back to the cookie
-    setCookie('outputData', existingData, 365);
-    console.log('Updated data to save:', existingData);
-  } else {
-    console.log('No new output to append.');
-  }
-});
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+      }
+      return '';
+    }
 
-document.getElementById('download-btn').addEventListener('click', () => {
-  const data = getCookie('outputData');
-  console.log('Data to download:', data);
-  
-  if (!data) {
-    alert('No data to download.');
-    return;
-  }
-
-   // Get today's date
-   const today = new Date();
-  const formattedDate = today.toISOString().split('T')[0]; // This gives YYYY-MM-DD format
-
-  // Set the filename to be the current date
-  const fileName = `Notation_${formattedDate}.txt`;
-
-
-  const blob = new Blob([data], { type: 'text/plain' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = fileName;
-  link.click();
-});
-
-document.getElementById('clear-cookies-btn').addEventListener('click', () => {
-  clearCookie('outputData');
-  console.log('Cookies cleared');
-});
-
-// Utility functions for handling cookies
-function setCookie(name, value, days) {
-  const expires = new Date();
-  expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-  document.cookie = `${name}=${encodeURIComponent(value)};expires=${expires.toUTCString()};path=/`;
-  console.log(`Cookie set: ${name}=${value}`);
-}
-
-function getCookie(name) {
-  const nameEQ = name + "=";
-  const ca = document.cookie.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
-  }
-  return '';
-}
-
-function clearCookie(name) {
-  setCookie(name, "", -1); // Set expiration to past date to delete
-  console.log(`Cookie deleted: ${name}`);
-}
-
+    function clearCookie(name) {
+      setCookie(name, "", -1); // Set expiration to past date to delete
+      console.log(`Cookie deleted: ${name}`);
+    }
   </script>
-
 </body>
 </html>
