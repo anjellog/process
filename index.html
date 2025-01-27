@@ -53,7 +53,7 @@
     </div>
 
     <script>
-        const API_KEY = 'AIzaSyDSFHI1uY8tZEWBTDVaKw5NULqVcA9e4Lk';
+        const API_KEY = 'AIzaSyDRBN_E9pEH9aEWOANZssvJv8XNK2H0-zE';
         let fileUri = null;
         let conversationHistory = [];
 
@@ -187,7 +187,7 @@
         // Format the bot's response
         function formatResponse(text) {
             return text
-                .replace(/\*\*(.*?)\*\*/g, '<strong class="bg-yellow-300 text-gray-800 px-1">$1</strong>') // Highlight and bold
+                .replace(/\*\*(.*?)\*\*/g, '<strong class="bg-blue-200 text-gray-800 px-1">$1</strong>') // Highlight and bold
                 .replace(/\*(.*?)/g, '<br>$1'); // New line for single *
         }
 
