@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>US Time Lookup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .state {
+      fill: none;
+      transition: fill 0.3s ease-in-out;
+    }
+    .time-dsp{
+        font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900 flex flex-col items-center p-6">
+  
+  <div class="p-6 border ">
+    <input id="state-input" maxlength="2" type="text" placeholder="Enter state" class="p-3 rounded-lg border border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-700" />
+  </div>
+
+  
+  <div class="map-container mt-3">
+    <object id="us-map" type="image/svg+xml" data="us.svg" class="w-full h-auto"></object>
+  </div>
+  
+  <div id="time-display" class="mt-6 text-3xl font-bold time-dsp"></div>
+
+  <script>
+    const timeZones = {
+      "AL": "America/Chicago", "AK": "America/Anchorage", "AZ": "America/Phoenix", "AR": "America/Chicago",
+      "CA": "America/Los_Angeles", "CO": "America/Denver", "CT": "America/New_York", "DE": "America/New_York",
+      "FL": "America/New_York", "GA": "America/New_York", "HI": "Pacific/Honolulu", "ID": "America/Boise",
+      "IL": "America/Chicago", "IN": "America/New_York", "IA": "America/Chicago", "KS": "America/Chicago",
+      "KY": "America/New_York", "LA": "America/Chicago", "ME": "America/New_York", "MD": "America/New_York",
+      "MA": "America/New_York", "MI": "America/Detroit", "MN": "America/Chicago", "MS": "America/Chicago",
+      "MO": "America/Chicago", "MT": "America/Denver", "NE": "America/Chicago", "NV": "America/Los_Angeles",
+      "NH": "America/New_York", "NJ": "America/New_York", "NM": "America/Denver", "NY": "America/New_York",
+      "NC": "America/New_York", "ND": "America/Chicago", "OH": "America/New_York", "OK": "America/Chicago",
+      "OR": "America/Los_Angeles", "PA": "America/New_York", "RI": "America/New_York", "SC": "America/New_York",
+      "SD": "America/Chicago", "TN": "America/Chicago", "TX": "America/Chicago", "UT": "America/Denver",
+      "VT": "America/New_York", "VA": "America/New_York", "WA": "America/Los_Angeles", "WV": "America/New_York",
+      "WI": "America/Chicago", "WY": "America/Denver"
+    };
+
+    const abbreviations = {
+      "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California", "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware",
+      "FL": "Florida", "GA": "Georgia", "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", "IA": "Iowa", "KS": "Kansas",
+      "KY": "Kentucky", "LA": "Louisiana", "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota", "MS": "Mississippi",
+      "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire", "NJ": "New Jersey", "NM": "New Mexico", "NY": "New York",
+      "NC": "North Carolina", "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island",
+      "SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VT": "Vermont", "VA": "Virginia",
+      "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming"
+    };
+
+    const timeZoneColors = {
+      "America/Los_Angeles": "#d66733",   // Pacific Time
+      "America/Denver": "#63a952",        // Mountain Time
+      "America/Chicago": "#e6a730",      // Central Time
+      "America/New_York": "#cc2131",         // Eastern Time
+      "America/Anchorage": "#0060a8",
+      "America/Boise": "#63a952",
+      "Pacific/Honolulu": "#aa378d", 
+      "America/Detroit": "#cc2131",
+      "America/Phoenix": "#63a952",
+
+
+    };
+    
+    const input = document.getElementById('state-input');
+    const timeDisplay = document.getElementById('time-display');
+    
+    function updateTime() {
+      const stateAbbr = input.value.toUpperCase().trim();
+      if (timeZones[stateAbbr]) {
+        timeDisplay.textContent = `${abbreviations[stateAbbr]}: ` + new Intl.DateTimeFormat([], {
+          timeZone: timeZones[stateAbbr], hour: '2-digit', minute: '2-digit', second: '2-digit'
+        }).format(new Date());
+      } else {
+        timeDisplay.textContent = "";
+      }
+    }
+    
+    setInterval(updateTime, 1000);
+    
+    document.getElementById('us-map').addEventListener('load', function() {
+      const svgDoc = this.contentDocument;
+      input.addEventListener('input', function() {
+        const stateAbbr = this.value.toUpperCase().trim();
+        svgDoc.querySelectorAll('path').forEach(state => state.setAttribute('fill', 'none'));
+        
+        if (timeZones[stateAbbr]) {
+          const stateElement = svgDoc.getElementById(stateAbbr);
+          if (stateElement) {
+            stateElement.setAttribute('fill', timeZoneColors[timeZones[stateAbbr]] || 'none');
+          }
+          updateTime();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
