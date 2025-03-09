@@ -1,0 +1,23 @@
+
+Hi, my name is Angelo calling on behalf of _________, an Adapthealth company and all calls are recorded. Am I speaking with the office handling [Patient Name] with [DOB]?
+
+
+1. “Could you please tell me the date of their last office visit?”
+2. “Who is the current sleep doctor on record?”
+
+Actually, I’m following up on the document we sent via fax, parachute, or goscript. Has it been received?”
+	
+	If Yes: “Thanks. What is the turnaround time for the fax?”
+	If No: “May we refax the document? Please confirm your fax number. Also, what is your usual 	turnaround time for faxed documents?”
+
+------------------------------------------------------------------------------------------------
+“If the patient is now seeing another doctor, could you provide the following details:
+Doctor’s full name
+NPI number
+Office address
+Phone number
+Fax number
+Name of the medical assistant”
+------------------------------------------------------------------------------------------------
+
+Thank you so much for your assistance today and for choosing _______, an Adapthealth company. Have a great day!
